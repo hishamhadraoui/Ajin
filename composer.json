@@ -1,0 +1,22 @@
+{
+    "name": "hishamhadraoui/ajin",
+    "type": "library",
+    "description": "Ajin Components",
+    "keywords": [],
+    "homepage": "https://github.com/hishamhadraoui/ajin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hisham Hadraoui",
+            "email": "hichamhadraoui.hh@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ajin\\": "src"
+        }
+    }
+}
