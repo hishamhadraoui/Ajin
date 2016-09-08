@@ -5,5 +5,5 @@ In the mean time i only developped two classes:
 
 Input Component : will help you in working with the POST/GET superglobals.
 
-Session Component : will help you in working with the Session in general.
 
+Session Component : will help you in working with the Session in general.
