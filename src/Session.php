@@ -10,31 +10,15 @@ namespace Ajin;
 class Session
 {
     /**
-     * Initialize the session.
-     *
-     * @return mixed
-     */
-    public static function init()
-    {
-        if (!session_id()) {
-            return session_start();
-        }
-
-        return true;
-    }
-
-    /**
      * Checks if the key exists.
      *
      * @param string $key
      *
      * @return bool exists or not
      */
-    public static function has($key)
+    public static function has(string $key)
     {
-        if (self::init()) {
-            return isset($_SESSION[(string) $key]) === true;
-        }
+        return isset($_SESSION[(string) $key]) === true;
     }
 
     /**
@@ -45,8 +29,13 @@ class Session
      *
      * @return mixed
      */
-    public static function put($key, $value)
+    public static function put(string $key, $value=null)
     {
+        if (is_array($key))
+        {
+            return self::puts($key);
+        } 
+
         return $_SESSION[(string) $key] = $value;
     }
 
@@ -57,7 +46,7 @@ class Session
      *
      * @return mixed
      */
-    public static function puts(array $data)
+    protected static function puts(array $data)
     {
         foreach ($data as $key => $value) {
             self::put($key, $value);
@@ -71,9 +60,13 @@ class Session
      *
      * @return mixed
      */
-    public static function get($key)
+    public static function get(string $key)
     {
-        if (self::init() and self::has($key)) {
+        if (is_array($key)) {
+            return self::gets($key);
+        }
+
+        if (self::has($key)) {
             return $_SESSION[(string) $key];
         }
 
@@ -84,15 +77,14 @@ class Session
      * Get multiple variables from the session.
      *
      * @param array $keys [The keys for each variable]
-     * @param bool  $type [The way that you want to get the data]
      */
-    public static function gets(array $keys, $type = false)
+    protected static function gets(array $keys)
     {
-        foreach ($keys as $key => $value) {
-            if ($type == true) {
-                $output[] = [$value => self::get($value)];
-            } else {
-                $output[] = self::get($value);
+        foreach ($keys as $key)
+        {
+            if (self::has($key))
+            {
+                $output[$key] = self::get($key);
             }
         }
 
@@ -108,7 +100,7 @@ class Session
      */
     public static function forget($key)
     {
-        if (self::init() and self::has($key)) {
+        if (self::has($key)) {
             unset($_SESSION[(string) $key]);
 
             return true;
@@ -124,11 +116,9 @@ class Session
      */
     public static function dump()
     {
-        if (self::init()) {
-            echo '<pre>';
+        echo '<pre>';
             print_r($_SESSION);
-            echo '</pre>';
-        }
+        echo '</pre>';
     }
 
     /**
@@ -168,7 +158,6 @@ class Session
     public static function destroy()
     {
         if (session_id()) {
-            // unset($_SESSION);
             return session_destroy();
         }
 
