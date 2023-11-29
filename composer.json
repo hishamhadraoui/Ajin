@@ -1,7 +1,7 @@
 {
     "name": "hishamhadraoui/ajin",
     "type": "library",
-    "description": "Ajin Components",
+    "description": "Optimize your PHP development effortlessly with Ajin Components, currently it only helps with post, get and sessions global variables.",
     "keywords": [],
     "homepage": "https://github.com/hishamhadraoui/ajin",
     "license": "MIT",
